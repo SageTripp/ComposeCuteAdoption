@@ -10,25 +10,25 @@ import com.example.androiddevchallenge.MainViewModel
 
 @Composable
 fun Home() {
-  val mainVm: MainViewModel = viewModel()
-  val puppies = mainVm.puppies
+    val mainVm: MainViewModel = viewModel()
+    val puppies = mainVm.puppies
 
-  PuppyList(
-    puppies,
-    Modifier
-      .fillMaxSize()
-      .padding(horizontal = 16.dp),
-    isAdoption = mainVm::isAdoption,
-    togglePuppyAdoption = mainVm::toggleAdoption,
-    onPuppyClick = mainVm::showPuppyDetail
-  )
+    PuppyList(
+        puppies,
+        Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        isAdoption = mainVm::isAdoption,
+        togglePuppyAdoption = mainVm::toggleAdoption,
+        onPuppyClick = mainVm::showPuppyDetail
+    )
 
-  val currentPuppy = mainVm.currentPuppy
-  if (null != currentPuppy) {
-    val isAdoption = mainVm.isAdoption(currentPuppy)
-    PuppyDetail(puppy = currentPuppy, modifier = Modifier.fillMaxSize(), isAdoption = isAdoption) {
-      mainVm.toggleAdoption(currentPuppy)
+    val currentPuppy = mainVm.currentPuppy
+    if (null != currentPuppy) {
+        val isAdoption = mainVm.isAdoption(currentPuppy)
+        PuppyDetail(puppy = currentPuppy, modifier = Modifier.fillMaxSize(), isAdoption = isAdoption) {
+            mainVm.toggleAdoption(currentPuppy)
+        }
     }
-  }
 
 }

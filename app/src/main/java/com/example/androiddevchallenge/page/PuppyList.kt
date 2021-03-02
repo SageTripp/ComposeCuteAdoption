@@ -40,104 +40,104 @@ import com.example.androiddevchallenge.data.Puppy
 
 @Composable
 fun PuppyList(
-  puppies: List<Puppy>,
-  modifier: Modifier = Modifier,
-  isAdoption: (puppy: Puppy) -> Boolean = { false },
-  togglePuppyAdoption: (puppy: Puppy) -> Unit = {},
-  onPuppyClick: (puppy: Puppy) -> Unit = {}
+    puppies: List<Puppy>,
+    modifier: Modifier = Modifier,
+    isAdoption: (puppy: Puppy) -> Boolean = { false },
+    togglePuppyAdoption: (puppy: Puppy) -> Unit = {},
+    onPuppyClick: (puppy: Puppy) -> Unit = {}
 ) {
-  Scaffold(
-    topBar = {
-      TopAppBar(title = {
-        Text(text = "Puppy Adoption")
-      })
-    },
-  ) {
-    LazyColumn(modifier) {
-      items(puppies) { puppy ->
-        PuppyItem(
-          puppy = puppy,
-          Modifier.padding(vertical = 6.dp),
-          isAdoption = isAdoption(puppy),
-          togglePuppyAdoption = { togglePuppyAdoption(puppy) }
-        ) {
-          onPuppyClick(puppy)
+    Scaffold(
+        topBar = {
+            TopAppBar(title = {
+                Text(text = "Puppy Adoption")
+            })
+        },
+    ) {
+        LazyColumn(modifier) {
+            items(puppies) { puppy ->
+                PuppyItem(
+                    puppy = puppy,
+                    Modifier.padding(vertical = 6.dp),
+                    isAdoption = isAdoption(puppy),
+                    togglePuppyAdoption = { togglePuppyAdoption(puppy) }
+                ) {
+                    onPuppyClick(puppy)
+                }
+            }
         }
-      }
     }
-  }
 }
 
 @Composable
 private fun PuppyItem(puppy: Puppy, modifier: Modifier = Modifier, isAdoption: Boolean = false, togglePuppyAdoption: () -> Unit = {}, onPuppyClick: () -> Unit = {}) {
-  Row(
-    modifier = modifier.clickable { onPuppyClick() },
-    verticalAlignment = Alignment.CenterVertically
-  ) {
-    val imageModifier = Modifier
-      .size(88.dp)
-      .clip(CircleShape)
-      .zIndex(100f)
+    Row(
+        modifier = modifier.clickable { onPuppyClick() },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val imageModifier = Modifier
+            .size(88.dp)
+            .clip(CircleShape)
+            .zIndex(100f)
 
-    Image(
-      painter = painterResource(id = puppy.photo),
-      contentDescription = "picture of ${puppy.name}",
-      modifier = imageModifier
-    )
+        Image(
+            painter = painterResource(id = puppy.photo),
+            contentDescription = "picture of ${puppy.name}",
+            modifier = imageModifier
+        )
 
-    PuppyInfo(puppy, isAdoption, togglePuppyAdoption)
-  }
+        PuppyInfo(puppy, isAdoption, togglePuppyAdoption)
+    }
 }
 
 @Composable
 private fun PuppyInfo(puppy: Puppy, isAdoption: Boolean, togglePuppyAdoption: () -> Unit = {}) {
-  Surface(
-    Modifier
-      .offset(x = (-32).dp)
-      .fillMaxWidth()
-      .requiredHeight(64.dp)
-      .clip(RoundedCornerShape(topEndPercent = 50, bottomEndPercent = 50)),
-    color = MaterialTheme.colors.surface
-  ) {
-    Row(Modifier.padding(start = 52.dp, end = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-      Column(Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
-        Text(text = puppy.name, style = MaterialTheme.typography.subtitle1)
-        Row(verticalAlignment = Alignment.CenterVertically) {
-          Icon(imageVector = Icons.Rounded.LocationOn, contentDescription = "address of ${puppy.name}")
-          Spacer(modifier = Modifier.width(4.dp))
-          Text(text = puppy.addressCity, style = MaterialTheme.typography.body2)
-        }
-      }
-      val adoption = if (!isAdoption) {
-        Icons.Outlined.FavoriteBorder
-      } else {
-        Icons.Filled.Favorite
-      }
-      Icon(
-        imageVector = adoption,
-        contentDescription = "",
+    Surface(
         Modifier
-          .size(32.dp)
-          .clickable { togglePuppyAdoption() },
-      )
+            .offset(x = (-32).dp)
+            .fillMaxWidth()
+            .requiredHeight(64.dp)
+            .clip(RoundedCornerShape(topEndPercent = 50, bottomEndPercent = 50)),
+        color = MaterialTheme.colors.surface
+    ) {
+        Row(Modifier.padding(start = 52.dp, end = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
+                Text(text = puppy.name, style = MaterialTheme.typography.subtitle1)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Rounded.LocationOn, contentDescription = "address of ${puppy.name}")
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = puppy.addressCity, style = MaterialTheme.typography.body2)
+                }
+            }
+            val adoption = if (!isAdoption) {
+                Icons.Outlined.FavoriteBorder
+            } else {
+                Icons.Filled.Favorite
+            }
+            Icon(
+                imageVector = adoption,
+                contentDescription = "",
+                Modifier
+                    .size(32.dp)
+                    .clickable { togglePuppyAdoption() },
+            )
+        }
     }
-  }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PuppyItemPreview() {
-  val puppy = Puppy(id = "30511817", name = "OLIVIA", age = "young", photo = R.drawable.img_olivia, desc = "", addressCity = "Boston", size = "Large 61-100 lbs (28-45 kg)", sex = "f", breed = "Labrador Retriever")
-  PuppyItem(puppy, Modifier.size(240.dp, 84.dp))
+    val puppy = Puppy(id = "30511817", name = "OLIVIA", age = "young", photo = R.drawable.img_olivia, desc = "", addressCity = "Boston", size = "Large 61-100 lbs (28-45 kg)", sex = "f", breed = "Labrador Retriever")
+    PuppyItem(puppy, Modifier.size(240.dp, 84.dp))
 }
 
 @Preview
 @Composable
 fun PuppyListPreview() {
-  val puppies = listOf(
-    Puppy(id = "30511817", name = "OLIVIA", age = "young", photo = R.drawable.img_olivia, desc = "", addressCity = "Boston", size = "Large 61-100 lbs (28-45 kg)", sex = "f", breed = "Labrador Retriever"),
-    Puppy(id = "30626113", name = "TSUNAMI", age = "young", photo = R.drawable.img_tsunami, desc = "", addressCity = "Boston", size = "Med. 26-60 lbs (12-27 kg)", sex = "m", breed = "American Pit Bull Terrier"),
-    Puppy(id = "30460740", name = "ARTHUR", age = "adult", photo = R.drawable.img_arthur, desc = "", addressCity = "Boston", size = "Large 61-100 lbs (28-45 kg)", sex = "m", breed = "German Shepherd Dog"),
-  )
-  PuppyList(puppies = puppies)
+    val puppies = listOf(
+        Puppy(id = "30511817", name = "OLIVIA", age = "young", photo = R.drawable.img_olivia, desc = "", addressCity = "Boston", size = "Large 61-100 lbs (28-45 kg)", sex = "f", breed = "Labrador Retriever"),
+        Puppy(id = "30626113", name = "TSUNAMI", age = "young", photo = R.drawable.img_tsunami, desc = "", addressCity = "Boston", size = "Med. 26-60 lbs (12-27 kg)", sex = "m", breed = "American Pit Bull Terrier"),
+        Puppy(id = "30460740", name = "ARTHUR", age = "adult", photo = R.drawable.img_arthur, desc = "", addressCity = "Boston", size = "Large 61-100 lbs (28-45 kg)", sex = "m", breed = "German Shepherd Dog"),
+    )
+    PuppyList(puppies = puppies)
 }
